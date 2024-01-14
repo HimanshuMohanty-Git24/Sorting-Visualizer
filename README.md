@@ -1,4 +1,5 @@
 # Sorting Visualizer 📊
+![sort](https://github.com/HimanshuMohanty-Git24/Sorting-Visualizer/assets/94133298/22a263e8-6bc6-4872-ab27-07ad37354f43)
 
 Welcome to the Sorting Visualizer project! This web application allows you to visualize various sorting algorithms in action, providing an intuitive and educational experience.
 
