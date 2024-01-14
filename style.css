@@ -1,0 +1,45 @@
+.SelectionBox {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.selection-label {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+#algoSelect {
+  width: 40%;
+}
+
+body {
+  background-color: #f6f1e6;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* h4 {
+  padding-bottom: 10px;
+  color: #f6f1e6;
+} */
+
+#container {
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  width: 10px;
+  background-color: rgb(135, 25, 175);
+  margin: 1px;
+}
