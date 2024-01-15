@@ -31,8 +31,12 @@ git clone https://github.com/HimanshuMohanty-Git24/Sorting-Visualizer.git
 ## Supported Algorithms
 
 - Bubble Sort
+- Insertion Sort
+- Selection Sort
 - Heap Sort
 - Quick Sort
+- Merge Sort
+- Comb Sort
 
 ## Contributing
 
