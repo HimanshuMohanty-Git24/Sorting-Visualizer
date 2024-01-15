@@ -24,6 +24,12 @@ function play() {
     case "bubbleSort":
       steps = bubbleSort([...array]);
       break;
+    case "selectionSort":
+      steps = selectionSort([...array]);
+      break;
+    case "insertionSort":
+      steps = insertionSort([...array]);
+      break;
     case "mergeSort":
       console.log("mergeSort");
       steps = mergeSort([...array]);
@@ -35,6 +41,10 @@ function play() {
     case "quickSort":
       console.log("quickSort");
       steps = quickSort([...array]);
+      break;
+    case "combSort": // Add Comb Sort case
+      console.log("combSort");
+      steps = combSort([...array]);
       break;
     default:
       console.error("Invalid algorithm selected");
@@ -94,6 +104,37 @@ function animate(steps) {
   }, 30);
 }
 
+// Comb Sort
+function combSort(array) {
+  let gap = array.length;
+  let swaps = [];
+  let swapped = true;
+
+  while (gap > 1 || swapped) {
+    gap = getNextGap(gap);
+    swapped = false;
+
+    for (let i = 0; i < array.length - gap; i++) {
+      if (array[i] > array[i + gap]) {
+        swaps.push([i, i + gap]);
+        [array[i], array[i + gap]] = [array[i + gap], array[i]];
+        swapped = true;
+      }
+    }
+  }
+
+  return swaps;
+}
+// Get next gap
+function getNextGap(gap) {
+  gap = (gap * 10) / 13;
+  if (gap < 1) {
+    return 1;
+  }
+  return gap;
+}
+
+
 function bubbleSort(array) {
   let swaps = [];
   let swapped;
@@ -109,62 +150,97 @@ function bubbleSort(array) {
   } while (swapped);
   return swaps;
 }
+// Selection Sort
+function selectionSort(array) {
+  let swaps = [];
 
-function mergeSort(array) {
-  if (array.length <= 1) {
-    return [];
+  for (let i = 0; i < array.length - 1; i++) {
+    let minIndex = i;
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[j] < array[minIndex]) {
+        minIndex = j;
+      }
+    }
+    if (minIndex !== i) {
+      swaps.push([i, minIndex]);
+      [array[i], array[minIndex]] = [array[minIndex], array[i]];
+    }
   }
 
-  const swaps = [];
-  const indices = [];
-  const aux = array.slice();
+  return swaps;
+}
 
-  function merge(left, right, start) {
-    let i = 0,
-      j = 0;
+// Insertion Sort
+function insertionSort(array) {
+  let swaps = [];
+
+  for (let i = 1; i < array.length; i++) {
+    let current = array[i];
+    let j = i - 1;
+
+    while (j >= 0 && array[j] > current) {
+      swaps.push([j, j + 1]);
+      array[j + 1] = array[j];
+      j--;
+    }
+
+    array[j + 1] = current;
+  }
+
+  return swaps;
+}
+
+
+/*Merge Sort correct implementation */
+function mergeSort(array) {
+  const steps = [];
+
+  function mergeSortHelper(arr) {
+    if (arr.length <= 1) {
+      return arr;
+    }
+
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSortHelper(arr.slice(0, mid));
+    const right = mergeSortHelper(arr.slice(mid));
+
+    return merge(left, right);
+  }
+
+  function merge(left, right) {
+    const sorted = [];
+    let i = 0;
+    let j = 0;
+
     while (i < left.length && j < right.length) {
-      if (left[i] <= right[j]) {
-        array[start + i + j] = left[i];
-        indices.push([start + i + j, left[i]]);
+      steps.push({
+        type: "merge",
+        payload: [i + j, [left[i], right[j]]],
+      });
+      if (left[i] < right[j]) {
+        sorted.push(left[i]);
         i++;
       } else {
-        array[start + i + j] = right[j];
-        indices.push([start + i + j, right[j]]);
+        sorted.push(right[j]);
         j++;
       }
     }
 
     while (i < left.length) {
-      array[start + i + j] = left[i];
-      indices.push([start + i + j, left[i]]);
+      sorted.push(left[i]);
       i++;
     }
 
     while (j < right.length) {
-      array[start + i + j] = right[j];
-      indices.push([start + i + j, right[j]]);
+      sorted.push(right[j]);
       j++;
     }
+
+    return sorted;
   }
 
-  function sort(start, end) {
-    if (end - start <= 1) {
-      return;
-    }
-
-    const mid = Math.floor((start + end) / 2);
-    sort(start, mid);
-    sort(mid, end);
-
-    const left = aux.slice(start, mid);
-    const right = aux.slice(mid, end);
-
-    merge(left, right, start);
-  }
-
-  sort(0, array.length);
-
-  return indices;
+  mergeSortHelper(array);
+  return steps;
 }
 
 function heapSort(array) {
