@@ -43,3 +43,16 @@ body {
   background-color: rgb(135, 25, 175);
   margin: 1px;
 }
+
+.TextFooter{
+  /* font-size: 20px; */
+  /*Centre The text*/
+  text-align: center;
+  /*Set the font to bold*/
+  /* font-weight: bold; */
+  /*Take the textto the bottom of the page*/
+  position: absolute;
+  bottom: 0;
+  /*Set the width to 100%*/
+  width: 100%;
+}
