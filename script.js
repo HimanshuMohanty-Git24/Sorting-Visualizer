@@ -195,54 +195,66 @@ function insertionSort(array) {
 function mergeSort(array) {
   const steps = [];
 
-  function mergeSortHelper(arr) {
-    if (arr.length <= 1) {
-      return arr;
+  function mergeSortHelper(arr, start = 0, end = arr.length - 1) {
+    if (start < end) {
+      const mid = Math.floor((start + end) / 2);
+      mergeSortHelper(arr, start, mid);
+      mergeSortHelper(arr, mid + 1, end);
+      merge(arr, start, mid, end);
     }
-
-    const mid = Math.floor(arr.length / 2);
-    const left = mergeSortHelper(arr.slice(0, mid));
-    const right = mergeSortHelper(arr.slice(mid));
-
-    return merge(left, right);
   }
 
-  function merge(left, right) {
-    const sorted = [];
+  function merge(arr, start, mid, end) {
+    const left = arr.slice(start, mid + 1);
+    const right = arr.slice(mid + 1, end + 1);
+
     let i = 0;
     let j = 0;
+    let k = start;
 
     while (i < left.length && j < right.length) {
       steps.push({
         type: "merge",
-        payload: [i + j, [left[i], right[j]]],
+        payload: [k, [left[i], right[j]]],
       });
-      if (left[i] < right[j]) {
-        sorted.push(left[i]);
+
+      if (left[i] <= right[j]) {
+        arr[k] = left[i];
         i++;
       } else {
-        sorted.push(right[j]);
+        arr[k] = right[j];
         j++;
       }
+
+      k++;
     }
 
     while (i < left.length) {
-      sorted.push(left[i]);
+      arr[k] = left[i];
+      steps.push({
+        type: "merge",
+        payload: [k, [left[i]]],
+      });
       i++;
+      k++;
     }
 
     while (j < right.length) {
-      sorted.push(right[j]);
+      arr[k] = right[j];
+      steps.push({
+        type: "merge",
+        payload: [k, [right[j]]],
+      });
       j++;
+      k++;
     }
-
-    return sorted;
   }
 
   mergeSortHelper(array);
   return steps;
 }
 
+// Heap Sort
 function heapSort(array) {
   const steps = [];
 
