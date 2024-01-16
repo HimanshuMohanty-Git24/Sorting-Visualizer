@@ -26,7 +26,7 @@ git clone https://github.com/HimanshuMohanty-Git24/Sorting-Visualizer.git
 
 3. **Select Algorithm**: Choose a sorting algorithm from the dropdown menu.
 
-4. **Press Play**: Click the "Play" button to initiate the visualization.
+4. **Press Play**: Click the "Sort kar Bro!" button to initiate the visualization.
 
 ## Supported Algorithms
 
